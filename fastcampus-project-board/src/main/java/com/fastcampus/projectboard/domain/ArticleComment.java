@@ -9,7 +9,7 @@ import java.util.Objects;
 
 
 @Getter
-@ToString(callSuper = ture)
+@ToString(callSuper = true)
 @Table(indexes = {
         @Index(columnList = "content"),
         @Index(columnList = "createdAt"),
