@@ -3,16 +3,20 @@
 insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values
     ('kmkim', 'asdf1234', 'Kmkim', 'kmkim@mail.com', 'I am Kmkim.', now(), 'kmkim', now(), 'kmkim')
 ;
+insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at, modified_by) values
+    ('kmkim2', 'asdf5678', 'Kmkim2', 'kmkim2@mail.com', 'I am Kmkim2.', now(), 'kmkim2', now(), 'kmkim2')
+;
+
 
 -- 123 게시글
 insert into article (user_account_id,title, content, hashtag, created_by, modified_by, created_at, modified_at) values
-                                                                                                    (1,'Quisque ut erat.', 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.
+                                                                                                    (2,'Quisque ut erat.', 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.
 Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.
 Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', '#pink', 'Kamilah', 'Murial', '2024-05-30 23:53:46', '2024-03-10 08:48:50'),
-                                                                                                    (1,'Morbi ut odio.', 'Phasellus in felis. Donec semper sapien a libero. Nam dui.
+                                                                                                    (2,'Morbi ut odio.', 'Phasellus in felis. Donec semper sapien a libero. Nam dui.
 Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.
 Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '#purple', 'Arv', 'Keelby', '2024-05-06 11:51:24', '2024-05-23 08:34:54'),
-                                                                                                    (1,'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio.', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', '#purple', 'Adams', 'Thalia', '2024-08-13 08:32:22', '2024-04-02 02:58:19'),
+                                                                                                    (2,'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio.', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', '#purple', 'Adams', 'Thalia', '2024-08-13 08:32:22', '2024-04-02 02:58:19'),
                                                                                                     (1,'Fusce posuere felis sed lacus.', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '#mauv', 'Johny', 'Constantin', '2024-09-05 04:28:16', '2024-10-31 17:46:08'),
                                                                                                     (1,'Aliquam erat volutpat.', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', '#green', 'Karlene', 'Marmaduke', '2024-01-25 16:10:23', '2024-11-08 08:47:03'),
                                                                                                     (1,'Donec ut mauris eget massa tempor convallis.', 'Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.
