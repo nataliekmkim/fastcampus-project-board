@@ -184,13 +184,12 @@ class ArticleControllerTest {
     @DisplayName("[view][GET] 게시글 해시태그 검색 페이지 - 정상 호출")
     @Test
     public void givenNothing_whenRequestingArticleSearchHashtagView_thenReturnsArticleSearchHashtagView() throws Exception {
-        //given
+        // Given
         List<String> hashtags = List.of("#java", "#spring", "#boot");
         given(articleService.searchArticlesViaHashtag(eq(null), any(Pageable.class))).willReturn(Page.empty());
-        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(1,2,3,4,5));
         given(articleService.getHashtags()).willReturn(hashtags);
-
-        //when_then
+        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(1, 2, 3, 4, 5));
+        // When & Then
         mvc.perform(get("/articles/search-hashtag"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
@@ -202,7 +201,6 @@ class ArticleControllerTest {
         then(articleService).should().searchArticlesViaHashtag(eq(null), any(Pageable.class));
         then(articleService).should().getHashtags();
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
-
     }
 
     @DisplayName("[view][GET] 게시글 해시태그 검색 페이지 - 정상 호출, 해시태그 입력")
@@ -247,14 +245,13 @@ class ArticleControllerTest {
     }
 
 
-    @WithUserDetails(value = "kmkimTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = "unoTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 새 게시글 등록 - 정상 호출")
     @Test
     void givenNewArticleInfo_whenRequesting_thenSavesNewArticle() throws Exception {
         // Given
         ArticleRequest articleRequest = ArticleRequest.of("new title", "new content", "#new");
         willDoNothing().given(articleService).saveArticle(any(ArticleDto.class));
-
         // When & Then
         mvc.perform(
                         post("/articles/form")
@@ -268,15 +265,27 @@ class ArticleControllerTest {
         then(articleService).should().saveArticle(any(ArticleDto.class));
     }
 
-    @WithUserDetails(value = "kmkimTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @DisplayName("[view][GET] 게시글 수정 페이지")
+    @DisplayName("[view][GET] 게시글 수정 페이지 - 인증 없을 땐 로그인 페이지로 이동")
+    @Test
+    void givenNothing_whenRequesting_thenRedirectsToLoginPage() throws Exception {
+        // Given
+        long articleId = 1L;
+
+        // When & Then
+        mvc.perform(get("/articles/" + articleId + "/form"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrlPattern("**/login"));
+        then(articleService).shouldHaveNoInteractions();
+    }
+
+    @WithMockUser
+    @DisplayName("[view][GET] 게시글 수정 페이지 - 정상 호출, 인증된 사용자")
     @Test
     void givenNothing_whenRequesting_thenReturnsUpdatedArticlePage() throws Exception {
         // Given
         long articleId = 1L;
         ArticleDto dto = createArticleDto();
         given(articleService.getArticle(articleId)).willReturn(dto);
-
         // When & Then
         mvc.perform(get("/articles/" + articleId + "/form"))
                 .andExpect(status().isOk())
@@ -287,7 +296,8 @@ class ArticleControllerTest {
         then(articleService).should().getArticle(articleId);
     }
 
-    @WithUserDetails(value = "kmkimTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+
+    @WithUserDetails(value = "unoTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 게시글 수정 - 정상 호출")
     @Test
     void givenUpdatedArticleInfo_whenRequesting_thenUpdatesNewArticle() throws Exception {
@@ -295,7 +305,6 @@ class ArticleControllerTest {
         long articleId = 1L;
         ArticleRequest articleRequest = ArticleRequest.of("new title", "new content", "#new");
         willDoNothing().given(articleService).updateArticle(eq(articleId), any(ArticleDto.class));
-
         // When & Then
         mvc.perform(
                         post("/articles/" + articleId + "/form")

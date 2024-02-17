@@ -19,25 +19,25 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       return http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers(
-                                HttpMethod.GET,
-                                "/",
-                                "/articles",
-                                "/articles/search-hashtag"
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                )
-               .formLogin().and()
-               .logout()
+            return http
+                    .authorizeHttpRequests(auth -> auth
+                            .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                            .requestMatchers(
+                                    HttpMethod.GET,
+                                    "/",
+                                    "/articles",
+                                    "/articles/search-hashtag"
+                            ).permitAll()
+                            .anyRequest().authenticated()
+                    )
+                    .formLogin()
+                    .and()
+                    .logout()
                     .logoutSuccessUrl("/")
                     .and()
-               .build();
+                    .build();
 
     }
-
 
     @Bean
     public UserDetailsService userDetailsService(UserAccountRepository userAccountRepository) {
@@ -52,4 +52,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
 }

@@ -76,7 +76,7 @@ class JpaRepositoryTest {
         article.setHashtag(updatedHashtag);
 
         // When
-        Article savedArticle = articleRepository.save(article);
+        Article savedArticle = articleRepository.saveAndFlush(article);
 
         //Then
         assertThat(savedArticle).hasFieldOrPropertyWithValue("hashtag", updatedHashtag);
